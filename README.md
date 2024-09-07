@@ -1,70 +1,135 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Kodava Matrimony Application
 
-## Available Scripts
+A full-stack web application for Kodava matrimony, built using **Python (Flask)** for the backend and **React** for the frontend. The application includes user registration, login, profile search by location, and map integration using Leaflet for displaying profiles on a map. The project is designed to be scalable and runs on Windows.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **User Registration**: Allows users to register by entering their Name, Email, Place, Password, and Gender.
+- **User Login**: Verifies the user's login credentials. If not registered, it redirects them to the registration page.
+- **Profile Search by Location**: Users can search profiles based on location, and the results are displayed on a map.
+- **Map Integration**: The map shows profiles in specific locations with markers that can be clicked to show profile details.
+- **Profile Editing**: Users can edit their profile details after registration.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technology Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: React.js, Axios, React-Leaflet (for maps)
+- **Backend**: Flask (Python), Flask-CORS, PyMongo (MongoDB)
+- **Database**: MongoDB Atlas
+- **Map**: Leaflet with OpenStreetMap Tiles
 
-### `npm test`
+## Setup and Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Python 3.x
+- Node.js and npm
+- MongoDB Atlas (cloud database)
+- Flask, Flask-CORS, PyMongo installed via `pip`
+- React.js
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation Steps
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-repo/kodava-matrimony.git
+   cd kodava-matrimony
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Backend Setup**:
+   - Navigate to the `backend` folder:
+     ```bash
+     cd backend
+     ```
+   - Install Python dependencies:
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - Edit the `app.py` file to add your MongoDB Atlas credentials.
+   - Run the Flask backend:
+     ```bash
+     python app.py
+     ```
 
-### `npm run eject`
+3. **Frontend Setup**:
+   - Navigate to the `frontend` folder:
+     ```bash
+     cd ../frontend
+     ```
+   - Install the npm dependencies:
+     ```bash
+     npm install
+     ```
+   - Run the React frontend:
+     ```bash
+     npm start
+     ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Access the Application**:
+   - The frontend will be running on `http://localhost:3000` and the backend on `http://localhost:5000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## File Structure and Description
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Backend (`/backend` folder)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **app.py**: 
+  - The main Flask application that handles user registration, login, and search requests.
+  - Includes API routes for:
+    - `/register`: Registers users and stores them in the MongoDB database.
+    - `/login`: Verifies user login credentials.
+    - `/home/search`: Searches for profiles based on the provided location and returns matching profiles.
+  - Utilizes `PyMongo` to connect to MongoDB Atlas, with CORS enabled via `Flask-CORS`.
 
-## Learn More
+- **requirements.txt**: 
+  - Lists the Python dependencies required for the project (e.g., Flask, PyMongo, Flask-CORS).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Frontend (`/frontend` folder)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **src/App.js**: 
+  - The root React component that sets up the routing for the application using `react-router-dom`.
+  - Defines routes for the Registration, Login, Home, and Profile components.
 
-### Code Splitting
+- **src/components/Register.js**: 
+  - Contains the registration form where users input their details (Name, Email, Place, Password, Gender).
+  - Sends the registration data to the backend for storing in the database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **src/components/Login.js**: 
+  - A login form that takes in the user's Email and Password.
+  - On login, it sends a request to the backend for verification.
+  - If the login fails, it redirects the user to the Registration page.
 
-### Analyzing the Bundle Size
+- **src/components/Home.js**: 
+  - The home page where users can search profiles by place.
+  - An input field allows users to enter a place, and clicking the Search button fetches matching profiles from the backend.
+  - Uses Leaflet to display the results on a map, with markers showing profile locations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **src/components/MapComponent.js**: 
+  - A separate React component that displays the Leaflet map.
+  - Takes `profiles` as a prop and places markers on the map based on the latitude and longitude from the database.
 
-### Making a Progressive Web App
+### Database
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- The MongoDB Atlas database contains user profile information such as Name, Email, Place, Password (hashed), Gender, and location coordinates (latitude and longitude).
 
-### Advanced Configuration
+## How It Works
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. **User Registration**:
+   - Users fill out a registration form and submit their details.
+   - The backend hashes the password and stores the user details in the MongoDB Atlas database.
+   
+2. **User Login**:
+   - On the login page, the user enters their Email and Password.
+   - The backend checks the credentials against the stored details in the MongoDB database. If valid, the user is redirected to the Home page.
 
-### Deployment
+3. **Profile Search**:
+   - On the Home page, users enter a place to search profiles.
+   - The backend queries the MongoDB database for profiles in that place and returns the data, including latitude and longitude.
+   - The frontend displays the results on a Leaflet map with clickable markers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+4. **Map Integration**:
+   - The `react-leaflet` library is used to display a map.
+   - Markers representing profiles are shown on the map based on the latitude and longitude provided by the backend.
 
-### `npm run build` fails to minify
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License.
